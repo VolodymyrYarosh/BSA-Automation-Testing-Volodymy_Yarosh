@@ -1,6 +1,5 @@
 
 const { expect } = require('chai');
-const rundomNumber = () => Math.floor(Math.random() * 1000);
 const { App } = require('../src/pages');
 
 const app = new App();
@@ -15,7 +14,7 @@ describe('LogIn:', function () {
     await browser.reloadSession();
   });
 
-  it('should be able to login', async function () {
+  xit('should be able to login', async function () {
     await app.authPage.logIn({
       email: 'john_admin1@admin.com',
       password: 'Pa55word'
@@ -33,7 +32,7 @@ describe('LogIn:', function () {
     expect(url).to.be.eql('http://46.101.234.121/doctors');
   });
   
-  it('should not be able to login with invalid email', async function () {
+  xit('should not be able to login with invalid email', async function () {
 
    await app.authPage.logIn({
       email: 'john_admin451@admin.com',

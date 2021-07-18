@@ -7,7 +7,7 @@ const app = new App();
 
 describe('Profile Info:', function () {
 
- xit('should be able to change phone number', async function () {
+ it('should be able to change phone number', async function () {
 
     await browser.setWindowSize(1366, 768);
     await browser.url('/sign-in');
@@ -35,26 +35,27 @@ describe('Profile Info:', function () {
     const myProfile = pagesSection[3];
     await myProfile.waitForDisplayed({ timeout: 5000 });
     await myProfile.click();
-      
-      await browser.waitUntil(
-      async function () {
-        const editButton = await $$('button.styles_btn___s1BB');
-         const eButton = editButton[1];
-       
-              
-        return browser.waitForExist(eButton) == 'true'
-      },
-      { timeout: 5000 },
-    );
+    await browser.pause(5000);
 
+    const editButton = await $$('button.styles_btn___s1BB');
+    const eButton = editButton[1];
     await eButton.waitForDisplayed({ timeout: 5000 });
-    await eButton.click();
-    
-
+  
+   await eButton.click();
+  
+    const phoneField = await $('input[name="phone"]');
+    const phoneNumber = (`8000${rundomNumber()}00`);
+    await phoneField.waitForDisplayed({ timeout: 5000 });
+    await phoneField.setValue(phoneNumber);
+   
     const editButtonConfirm = await $$('button.styles_btn___s1BB');
     const eButtonConf = editButtonConfirm[4];
     await eButtonConf.waitForDisplayed({ timeout: 5000 });
     await eButtonConf.click();
+  
+
+
+    
     await browser.waitUntil(
       async function () {
         const inputPhoneNumber = await $$('a.styles_text__1HrCV');
@@ -64,10 +65,42 @@ describe('Profile Info:', function () {
       },
       { timeout: 5000 },
       );
-
-    const inputPhoneNumber = await $$('a.styles_text__1HrCV');
-    const inPhoneNumber = inputPhoneNumber[0];
-    const phone = await inPhoneNumber.getText();
-    expect(phone).to.be.eql(phoneNumber);
+      await browser.reloadSession();
   });
 });
+   
+   
+   
+   
+   
+   
+   
+   
+
+
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+    //   await browser.waitUntil(
+    //     async function () {
+         
+          
+  
+    //   },
+    //   { timeout: 5000 },
+    // );
+  
+   
