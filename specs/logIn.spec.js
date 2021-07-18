@@ -1,24 +1,26 @@
 
+const { expect } = require('chai');
 const rundomNumber = () => Math.floor(Math.random() * 1000);
+const { App } = require('../src/pages');
 
-describe('Login:', function () {
+const app = new App();
 
-  it('should be able to login', async function () {
-
+describe('LogIn:', function () {
+  beforeEach(async function () {
     await browser.setWindowSize(1366, 768);
     await browser.url('/sign-in');
+  });
 
-    const emailField = await $('input[name="email"]');
-    const passwordField = await $('input[name="password"]');
-    const signInButton = await $('button');
+  afterEach(async function () {
+    await browser.reloadSession();
+  });
 
-    await emailField.waitForDisplayed({ timeout: 5000 });
-    await emailField.setValue('john_admin1@admin.com');
-    await passwordField.waitForDisplayed({ timeout: 5000 });
-    await passwordField.setValue('Pa55word');
-    await signInButton.waitForDisplayed({ timeout: 5000 });
-    await signInButton.click();
-  
+  it('should be able to login', async function () {
+    await app.authPage.logIn({
+      email: 'john_admin1@admin.com',
+      password: 'Pa55word'
+    })
+
     await browser.waitUntil(
        async function () {
          const url = await browser.getUrl();
@@ -26,26 +28,17 @@ describe('Login:', function () {
        },
       { timeout: 5000 },
     );
-    await browser.reloadSession();
+    
+    const url = await browser.getUrl();
+    expect(url).to.be.eql('http://46.101.234.121/doctors');
   });
-
   
   it('should not be able to login with invalid email', async function () {
 
-    await browser.setWindowSize(1366, 768);
-    await browser.url('/sign-in');
-
-    const emailField = await $('input[name="email"]');
-    const passwordField = await $('input[name="password"]');
-    const signInButton = await $('button');
-
-    await emailField.waitForDisplayed({ timeout: 5000 });
-    await emailField.setValue(`john_admin${rundomNumber()}@admin.com`);
-    await passwordField.waitForDisplayed({ timeout: 5000 });
-    await passwordField.setValue('a55word');
-    await signInButton.waitForDisplayed({ timeout: 5000 });
-    await signInButton.click();
-
+   await app.authPage.logIn({
+      email: 'john_admin451@admin.com',
+      password: 'Pa55word'
+    })
 
     await browser.waitUntil(
       async function () {
@@ -54,6 +47,8 @@ describe('Login:', function () {
       },
       { timeout: 5000 }
     );
-    await browser.reloadSession();
+
+    const url = await browser.getUrl();
+    expect(url).to.be.eql('http://46.101.234.121/sign-in');
   });
 });
