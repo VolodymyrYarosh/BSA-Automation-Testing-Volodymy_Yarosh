@@ -3,7 +3,7 @@ const { expect } = require('chai');
 const rundomNumber = () => Math.floor(Math.random()*10000);
 describe('editDoctor:', function () {
 
-  it('should be able to Change Doctors specialty and clinic', async function () {
+  xit('should be able to Change Doctors specialty and clinic', async function () {
 
     await browser.setWindowSize(1366, 768);
     await browser.url('/sign-in');
