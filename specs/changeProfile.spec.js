@@ -66,36 +66,13 @@ describe('Profile Info:', function () {
         return phone === phoneNumber;
       },
       { timeout: 5000 },
-      );
+   );
+   
+        const inputPhoneNumber = await $$('a.styles_text__1HrCV');
+        const inPhoneNumber = inputPhoneNumber[0];
+        const phone = await inPhoneNumber.getText();
+        expect(phone).to.be.eql(phoneNumber);
+   
       await browser.reloadSession();
   });
 });
-   
-   
-   
-   
-   
-   
-   
-   
-
-
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-
-  
-   
