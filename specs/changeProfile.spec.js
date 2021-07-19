@@ -4,7 +4,6 @@ const { App } = require('../src/pages');
 
 const app = new App();
 
-
 describe('Profile Info:', function () {
 
  it('should be able to change phone number', async function () {
@@ -35,27 +34,30 @@ describe('Profile Info:', function () {
     const myProfile = pagesSection[3];
     await myProfile.waitForDisplayed({ timeout: 5000 });
     await myProfile.click();
-    await browser.pause(5000);
-
-    const editButton = await $$('button.styles_btn___s1BB');
-    const eButton = editButton[1];
-    await eButton.waitForDisplayed({ timeout: 5000 });
-  
-   await eButton.click();
-  
+    
+    await browser.waitUntil(
+       async function () {
+        const editButton = await $$('button.styles_btn___s1BB');
+        const eButton = editButton[1];
+        await eButton.waitForDisplayed({ timeout: 5000 });
+        await eButton.click();
+        const url = await browser.getUrl();
+        return url === 'http://46.101.234.121/user-profile/aa5058a3-3e09-4db4-b8fb-2232cc612265';
+     },
+       { timeout: 5000 },
+   );
+   
     const phoneField = await $('input[name="phone"]');
     const phoneNumber = (`8000${rundomNumber()}00`);
     await phoneField.waitForDisplayed({ timeout: 5000 });
     await phoneField.setValue(phoneNumber);
-   
+       
     const editButtonConfirm = await $$('button.styles_btn___s1BB');
     const eButtonConf = editButtonConfirm[4];
     await eButtonConf.waitForDisplayed({ timeout: 5000 });
     await eButtonConf.click();
-  
-
-
     
+                 
     await browser.waitUntil(
       async function () {
         const inputPhoneNumber = await $$('a.styles_text__1HrCV');
@@ -94,13 +96,6 @@ describe('Profile Info:', function () {
    
    
    
-    //   await browser.waitUntil(
-    //     async function () {
-         
-          
-  
-    //   },
-    //   { timeout: 5000 },
-    // );
+
   
    
