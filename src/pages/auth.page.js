@@ -15,22 +15,10 @@ class AuthPage {
 
     this.ddlOption = new Button('div.selectStyles__option=TEXT_TO_REPLACE');
     this.submitButton = new Button('button');
-    this.profileButton = new Button('a.link_link__3zEN3', 3);
-    this.editProfileButton = new Button('button.styles_btn___s1BB', 1);
-    this.editButton = new Button('button.styles_btn___s1BB', 4);
+    
   }
 
-  async changeProfile({ email, password, phone }) {
-    await this.emailField.setValue(email);
-    await this.passwordField.setValue(password);
-    await this.submitButton.click();
-    await this.profileButton.click();
-    await this.editProfileButton.click();
-    await this.phoneField.setValue(phone);
-    await this.editButton.click();
-    }
-
-  
+    
   async logIn({ email, password }) {
     await this.emailField.setValue(email);
     await this.passwordField.setValue(password);

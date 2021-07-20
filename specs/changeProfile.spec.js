@@ -1,64 +1,58 @@
 const { expect } = require('chai');
-const rundomNumber = () => Math.floor(Math.random() * 10000);
 const { App } = require('../src/pages');
+const rundomNumber = () => Math.floor(Math.random() * 10000);
 
 const app = new App();
 
+
 describe('Profile Info:', function () {
+  beforeEach(async function () {
+    await browser.setWindowSize(1440, 960);
+    await browser.url('/sign-in');
+  });
+  afterEach(async function () {
+    await browser.reloadSession();
+  });
 
  it('should be able to change phone number', async function () {
+   await app.authPage.logIn({
+     email: 'john_admin1@admin.com',
+     password: 'Pa55word',
+   });
 
-    await browser.setWindowSize(1366, 768);
-    await browser.url('/sign-in');
-
-    const emailField = await $('input[name="email"]');
-    const passwordField = await $('input[name="password"]');
-    const submitButton = await $('button');
-
-    await emailField.waitForDisplayed({ timeout: 5000 });
-    await emailField.setValue('john_admin1@admin.com');
-    await passwordField.waitForDisplayed({ timeout: 5000 });
-    await passwordField.setValue('Pa55word');
-    await submitButton.waitForDisplayed({ timeout: 5000 });
-    await submitButton.click();
- 
-    await browser.waitUntil(
-      async function () {
-        const url = await browser.getUrl();
-        return url === 'http://46.101.234.121/doctors';
-      },
-      { timeout: 5000 },
-    );
-   
-    const pagesSection = await $$('a.link_link__3zEN3');
-    const myProfile = pagesSection[3];
-    await myProfile.waitForDisplayed({ timeout: 5000 });
-    await myProfile.click();
-    
     await browser.waitUntil(
        async function () {
-        const editButton = await $$('button.styles_btn___s1BB');
-        const eButton = editButton[1];
-        await eButton.waitForDisplayed({ timeout: 5000 });
-        await eButton.click();
-        const url = await browser.getUrl();
-        return url === 'http://46.101.234.121/user-profile/aa5058a3-3e09-4db4-b8fb-2232cc612265';
-     },
-       { timeout: 5000 },
+         const url = await browser.getUrl();
+         return url === 'http://46.101.234.121/doctors';
+       },
+      { timeout: 5000 },
    );
+
+   await app.doctorsPage.openMyProfile({
+     
+   });
+
+   await browser.pause(5000); // delete
    
-    const phoneField = await $('input[name="phone"]');
-    const phoneNumber = (`8000${rundomNumber()}00`);
-    await phoneField.waitForDisplayed({ timeout: 5000 });
-    await phoneField.setValue(phoneNumber);
-       
-    const editButtonConfirm = await $$('button.styles_btn___s1BB');
-    const eButtonConf = editButtonConfirm[4];
-    await eButtonConf.waitForDisplayed({ timeout: 5000 });
-    await eButtonConf.click();
-    
+   await app.userProfilePage.editPhone({
+     phone: `8000${rundomNumber()}00`,
+
+   });
+
+
+
+
+      
+  
                  
-    await browser.waitUntil(
+   
+   
+   
+   
+   
+   
+   
+   await browser.waitUntil(
       async function () {
         const inputPhoneNumber = await $$('a.styles_text__1HrCV');
         const inPhoneNumber = inputPhoneNumber[0];
@@ -68,11 +62,10 @@ describe('Profile Info:', function () {
       { timeout: 5000 },
    );
    
-        const inputPhoneNumber = await $$('a.styles_text__1HrCV');
+    const inputPhoneNumber = await $$('a.styles_text__1HrCV');
         const inPhoneNumber = inputPhoneNumber[0];
         const phone = await inPhoneNumber.getText();
-        expect(phone).to.be.eql(phoneNumber);
-   
-      await browser.reloadSession();
+   expect(phone).to.be.eql(phoneNumber);
   });
 });
+   
