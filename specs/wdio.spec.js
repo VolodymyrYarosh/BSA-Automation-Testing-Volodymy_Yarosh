@@ -14,7 +14,7 @@ describe('Registration:', function () {
     await browser.reloadSession();
   });
 
-  xit('should be able to register doctor', async function () {
+  it('should be able to register doctor', async function () {
     await app.authPage.register({
       name: `John${rundomNumber()}`,
       surname: 'Doctor',
@@ -38,7 +38,7 @@ describe('Registration:', function () {
     expect(url).to.be.eql('http://46.101.234.121/doctors');
   });
 
- xit('should be able to register patient', async function () {
+ it('should be able to register patient', async function () {
     await app.authPage.register({
       name: `John${rundomNumber()}`,
       surname: 'Patient',
